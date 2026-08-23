@@ -1,5 +1,4 @@
-# Software-Security-### 
-### Briefly summarize your client, Artemis Financial, and its software requirements. Who was the client? What issue did the company want you to address?
+
 
 The client for this project was Artemis Financial, a financial consulting company that wanted to modernize its software while improving the protection of client data and financial information. The company has a public web interface, so secure communication was an important concern. Artemis Financial wanted Global Rain to improve the security of its existing application by adding a file verification step using a checksum and securing communication between the client and server. The application also needed to be tested for vulnerabilities after the security improvements were implemented.
 
