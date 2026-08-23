@@ -1,39 +1,44 @@
+# Artemis Financial Secure Software Project
 
+## Client and Software Requirements
 
-The client for this project was Artemis Financial, a financial consulting company that wanted to modernize its software while improving the protection of client data and financial information. The company has a public web interface, so secure communication was an important concern. Artemis Financial wanted Global Rain to improve the security of its existing application by adding a file verification step using a checksum and securing communication between the client and server. The application also needed to be tested for vulnerabilities after the security improvements were implemented.
+Artemis Financial is a financial consulting company that wanted to modernize its web application while improving the security of client and financial information. The primary goal was to add secure communication and data verification to the existing application. This included implementing a checksum using SHA-256, generating a certificate, and converting the application from HTTP to HTTPS.
 
-#### What did you do well when you found your client's software security vulnerabilities? Why is it important to code securely? What value does software security add to a company's overall well-being?
+## Software Security and Vulnerability Assessment
 
-One thing I did well was use multiple methods to evaluate the security of the application instead of relying on only one tool. I manually reviewed the code and also used OWASP Dependency-Check to identify vulnerabilities associated with the application's dependencies. I was careful to distinguish between vulnerabilities that were already present in the supplied application and vulnerabilities that could have been introduced through my changes.
+I used both manual code review and OWASP Dependency-Check to evaluate the security of the application. One thing I did well was verify the security of the application before and after making changes rather than assuming the refactored code was secure. Secure coding is important because vulnerabilities can expose sensitive information, interrupt services, and damage customer trust. For a financial company, protecting client information is especially important to the overall reliability and reputation of the organization.
 
-Secure coding is important because vulnerabilities can expose sensitive information or allow an attacker to interfere with an application. This is especially important for a financial company because customers expect their personal and financial information to be protected. Strong software security can reduce the possibility of data breaches, financial losses, service interruptions, and damage to the company's reputation. It can also help maintain customer trust in the organization.
+## Challenges and Lessons Learned
 
-### Which part of the vulnerability assessment was challenging or helpful to you?
+One of the most challenging parts of the project was Dependency-Check. The original project used an older version of the Maven plug-in that could no longer successfully retrieve the required vulnerability information. Updating the plug-in allowed the scan to complete successfully. This taught me that troubleshooting security tools and keeping them current are also important parts of secure software development.
 
-The Dependency-Check portion was one of the more challenging parts of the project. The original project used an older version of the OWASP Dependency-Check Maven plug-in, and the scan initially failed because it attempted to retrieve vulnerability information using an outdated NVD data source. After updating the Dependency-Check plug-in, I was able to successfully complete the scan.
+## Layers of Security
 
-This was also one of the most helpful parts of the project because it showed me that security tools themselves have to be maintained. A security test failing does not necessarily mean that the application code is incorrect. Sometimes the testing environment or tool configuration needs to be investigated before making changes to the application.
+I added multiple layers of security to the application. SHA-256 was implemented to generate a checksum for data-integrity verification. I also generated a self-signed certificate and PKCS12 keystore and configured the application to use HTTPS on port 8443. In future projects, I would continue using automated vulnerability scanners along with manual code review and functional testing to identify vulnerabilities and determine appropriate mitigation techniques.
 
-### How did you increase layers of security? In the future, what would you use to assess vulnerabilities and decide which mitigation techniques to use?
+## Functional and Security Testing
 
-I increased the application's security by adding multiple layers instead of relying on one security control. I implemented SHA-256 checksum verification to help verify data integrity. I generated a self-signed certificate and PKCS12 keystore and configured the application to communicate through HTTPS on port 8443. HTTPS protects information while it is being transmitted, while the checksum provides a way to determine whether data has been changed.
+After refactoring, I compiled and ran the application to verify that it operated without errors. I tested the `/hash` endpoint to confirm that it generated the expected SHA-256 checksum and verified that the application successfully operated through HTTPS.
 
-In the future, I would continue combining automated vulnerability scanning with manual code review and functional testing. Tools such as OWASP Dependency-Check can identify known vulnerabilities in third-party components, while manual review can identify logical and security problems that an automated scanner might not recognize. I would evaluate the severity and relevance of each vulnerability before selecting a mitigation technique rather than automatically changing or suppressing every finding.
+I also ran OWASP Dependency-Check against both the original and refactored versions of the application using the same Dependency-Check version. The results matched, demonstrating that my security changes did not introduce additional dependency vulnerabilities.
 
-### How did you make certain the code and software application were functional and secure? After refactoring the code, how did you check to see whether you introduced new vulnerabilities?
+## Tools and Practices
 
-I tested the application after refactoring to make sure it compiled and executed without errors. I verified that the `/hash` endpoint successfully generated a SHA-256 checksum from my unique data string. I also confirmed that the Spring Boot server successfully started on HTTPS port 8443 and that I could access the endpoint at `https://localhost:8443/hash`.
+The main tools and practices I used included:
 
-I also performed OWASP Dependency-Check testing after completing the refactoring. To determine whether my changes introduced additional dependency vulnerabilities, I ran the same version of Dependency-Check against a clean copy of the original Project Two application and compared those findings with the refactored version. The results matched. This showed that the vulnerabilities identified in the final report were already associated with the supplied dependencies and that my SHA-256 and HTTPS changes did not introduce additional dependency vulnerabilities.
+* Java and Eclipse
+* Maven
+* Java Keytool
+* SHA-256 and Java `MessageDigest`
+* HTTPS and SSL/TLS configuration
+* PKCS12 keystore and certificate management
+* OWASP Dependency-Check
+* Manual code review
+* Functional and security testing
 
-### What resources, tools, or coding practices did you use that might be helpful in future assignments or tasks?
+These tools and practices will be useful in future software development and cybersecurity projects, particularly when working with secure communications and vulnerability assessment.
 
-Several tools and practices from this project will be useful in future software development assignments. I used Eclipse for development, Maven for building and managing the project, Java Keytool for generating the certificate and keystore, and OWASP Dependency-Check for static vulnerability testing. I also gained more experience using Java's `MessageDigest` functionality to implement SHA-256.
+## Portfolio Value
 
-The project also reinforced the importance of using established security libraries instead of attempting to create custom cryptographic solutions. Other useful practices included testing after making changes, comparing security results before and after refactoring, using HTTPS for sensitive communications, and reviewing code manually in addition to using automated security tools.
-
-### Employers sometimes ask for examples of work that you have successfully completed to show your skills, knowledge, and experience. What might you show future employers from this assignment?
-
-I could use the refactored Artemis Financial application as an example of my ability to apply secure coding practices to an existing software project. I could demonstrate how I implemented SHA-256 checksum verification, configured a Java application to communicate through HTTPS, generated and configured a certificate and keystore, and performed vulnerability testing with OWASP Dependency-Check.
-
-I could also discuss the troubleshooting involved in getting Dependency-Check to work and how I compared the original and refactored applications to verify that my changes did not introduce new dependency vulnerabilities. This project demonstrates more than my ability to write Java code. It shows that I can identify security concerns, implement security improvements, test those improvements, troubleshoot development tools, and verify that an application remains functional after being modified.
+I would show future employers the refactored Artemis Financial application as an example of my secure software development skills. The project demonstrates my ability to implement checksum verification, configure HTTPS, work with certificates and keystores, perform vulnerability scanning, troubleshoot security tools, and verify that security changes do not introduce additional vulnerabilities. It demonstrates both Java development skills and an understanding of secure software development practices.
+han my ability to write Java code. It shows that I can identify security concerns, implement security improvements, test those improvements, troubleshoot development tools, and verify that an application remains functional after being modified.
